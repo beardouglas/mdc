@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="app_name">FBReader</string>
+    <string name="title_story_detail">Question Detail</string>
+    <string name="title_story_list">Latest Questions</string>
+    <string name="app_id">563822636996345</string>
+    <string name="share">Share</string>
+    <string name="friends">Who should know?</string>
+    <string name="error_dialog_title">Error</string>
+    <string name="error_dialog_button_text">OK</string>
+
+</resources>
