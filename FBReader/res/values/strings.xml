@@ -2,7 +2,7 @@
 
     <string name="app_name">FBReader</string>
     <string name="title_story_detail">Resource Detail</string>
-    <string name="title_story_list">Facebook Resources</string>
+    <string name="title_story_list">Facebook Developer Resources</string>
     <string name="share">Share</string>
     <string name="friends">Who should know?</string>
     <string name="androidFriends">Latest listens on Android</string>
