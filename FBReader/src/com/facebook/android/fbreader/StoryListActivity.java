@@ -1,7 +1,11 @@
 package com.facebook.android.fbreader;
 
+
+import java.util.List;
+
+import org.json.JSONException;
+
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -27,7 +31,7 @@ public class StoryListActivity extends FragmentActivity
 	
     // add the UiLifecycleHelper to manage Session
 	
-    /*private UiLifecycleHelper uiHelper;
+   /* private UiLifecycleHelper uiHelper;
     private Session.StatusCallback callback = new Session.StatusCallback() {
         @Override
         public void call(Session session, SessionState state, Exception exception) {
@@ -43,10 +47,10 @@ public class StoryListActivity extends FragmentActivity
         setContentView(R.layout.activity_story_list);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         
-        /*
-        uiHelper = new UiLifecycleHelper(this, callback);
-        uiHelper.onCreate(savedInstanceState);
-        */
+        
+       // uiHelper = new UiLifecycleHelper(this, callback);
+       // uiHelper.onCreate(savedInstanceState);
+        
         
         if (findViewById(R.id.story_detail_container) != null) {
             ((StoryListFragment) getSupportFragmentManager()
@@ -84,16 +88,17 @@ public class StoryListActivity extends FragmentActivity
 					}
 				});
                 firstRequest.executeAsync();
+ 
             } else if (state.isClosed()) {
                 // Don't make any API calls!
             }
         
     }*/
     
-    // Explicitly call UiLifecycleHelper methods in all Activity
+    // Explicitly call UiLifecycleHelper methods in Activity
     // lifecycle methods:
     
-    /*@Override
+   /* @Override
     public void onResume() {
         super.onResume();
         uiHelper.onResume();

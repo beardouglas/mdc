@@ -8,15 +8,17 @@ import com.facebook.model.GraphUser;
 
 /*
  * In this app, we are using the Application class
- * only to store the list of selected friends that
+ * to store the list of selected friends that
  * is picked in the FriendPicker. FBReaderApplication
  * has a "get friend names" method that returns just
  * the names of selected friends.
+ * 
  */
 
 public class FBReaderApplication extends Application {
 	
 	private List<GraphUser> selectedFriends;
+	private List<String> androidFriendIds;
 	
 	public List<GraphUser> getSelectedFriends() {
 	    return selectedFriends;

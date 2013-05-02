@@ -1,5 +1,9 @@
 package com.facebook.android.fbreader;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,6 +19,10 @@ import android.widget.Toast;
 
 import com.facebook.FacebookException;
 import com.facebook.FacebookOperationCanceledException;
+import com.facebook.HttpMethod;
+import com.facebook.Request;
+import com.facebook.RequestBatch;
+import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
@@ -25,7 +33,9 @@ import com.facebook.widget.WebDialog.OnCompleteListener;
 /*
  * The StoryDetailFragment shows details on the selected
  * content, a button for sharing a story back to 
- * Facebook, and a button for selecting friends. Initially,
+ * Facebook, a button for selecting friends, and a button
+ * that gets a list of friends using Android devices and
+ * the music they've been listening to lately. Initially,
  * these buttons do not do anything. 
  * 
  */
@@ -38,6 +48,7 @@ public class StoryDetailFragment extends Fragment {
     
     private Button shareButton;
     private Button pickFriendsButton;
+    private Button androidFriendsButton;
     
     /*private UiLifecycleHelper uiHelper;
     private Session.StatusCallback callback = new Session.StatusCallback() {
@@ -49,8 +60,7 @@ public class StoryDetailFragment extends Fragment {
     
     private void onSessionStateChange(Session session, SessionState state,
 			Exception exception) {
-		Toast.makeText(getActivity(), "Nothing to see here!", Toast.LENGTH_SHORT).show();
-		
+    	    Log.i("StoryDetailFragment", "Session updated: "+ state.toString());
 	} */
     
   //private static final int REAUTH_ACTIVITY_CODE = 100;
@@ -76,7 +86,7 @@ public class StoryDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_story_detail, container, false);
         if (mItem != null) {
         	   shareButton = ((Button) rootView.findViewById(R.id.shareButton));
-        	   /*shareButton.setOnClickListener(new View.OnClickListener() {
+        	  /* shareButton.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
@@ -98,6 +108,22 @@ public class StoryDetailFragment extends Fragment {
 				public void onClick(View v) {
 					if (Session.getActiveSession().isOpened()) {
 						pickFriends(FriendPicker.FRIEND_PICKER, 100);
+					} else {
+						Toast.makeText(getActivity(), 
+								"You must log in to pick friends", 
+								Toast.LENGTH_SHORT)
+								.show();
+					}
+				}
+			});*/
+        	   
+        	   androidFriendsButton = ((Button) rootView.findViewById(R.id.androidFriendsButton));
+        	   /*androidFriendsButton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if (Session.getActiveSession().isOpened()) {
+						getAndroidFriends();
 					} else {
 						Toast.makeText(getActivity(), 
 								"You must log in to pick friends", 
@@ -173,16 +199,16 @@ public class StoryDetailFragment extends Fragment {
     
     // Sends an intent to the FriendPicker Activity to
     // pop up a FriendPickerFragment and save the list
-    // of selected people in the Application data
-    
-    /*private void pickFriends(Uri data, int requestCode) {
+    // of selected people in the Application data.
+    private void pickFriends(Uri data, int requestCode) {
     	     Intent intent = new Intent();
     	     intent.setData(data);
     	     intent.setClass(getActivity(), FriendPicker.class);
     	     startActivityForResult(intent, requestCode);
     }
     
-    @Override
+    // Handle the result of the friend picker
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
        if (resultCode == Activity.RESULT_OK && 
@@ -197,6 +223,117 @@ public class StoryDetailFragment extends Fragment {
         }
     } */
     
+   
+    // Gets Android friend data in two steps-- make FQL
+    // call to get IDs, pass those ids to a function that
+    // will create Requests to fetch the songs that 
+    // friend has listened to
+    /*private void getAndroidFriends() {
+    	     requestAndroidFriendIds();
+    }*/
+    
+    // Make an FQL call using the user and friend
+    // tables to return a list of friends that only
+    // includes people using at least one Android
+    // device, alphabetized by name
+   /* private void requestAndroidFriendIds() {
+    	      String fqlQuery = "SELECT uid, devices FROM user WHERE uid IN" + 
+                  "(SELECT uid2 FROM friend WHERE uid1 = me() LIMIT 100) " +
+                  "AND \"Android\" IN devices " +
+                  "ORDER BY name";
+          Bundle params = new Bundle();
+          
+          // Put the query text into param "q"
+          params.putString("q", fqlQuery);
+          Session session = Session.getActiveSession();
+          
+          // Construct a request using the /fql graph path
+          // end point and pass in parameter "q"
+          Request request = new Request(session,
+              "/fql",                         
+              params,                         
+              HttpMethod.GET,                 
+              new Request.Callback(){         
+                  public void onCompleted(Response response) {
+                      if (response!=null) {
+                    	     // if this call returned friends,
+                    	     // parse the response for UIDs
+                    	     ArrayList<String> androidIds = getIdsFromResponse(response);
+                    	     handleGetMusic(androidIds);
+                      }
+                  }                  
+          }); 
+          request.executeAsync();
+         
+    }*/
+    
+    // Pull uids from response data. Quick and dirty,
+    // a proper implementation should probably model
+    // the response
+    /*private ArrayList<String> getIdsFromResponse(Response response) {
+    	     int uidStart;
+    	     int uidEnd;
+    	     Log.i("Response was", response.toString());
+    	     String responseText = response.toString();
+    	     ArrayList<String>androidIds = new ArrayList<String>();
+    	     for (int i=0; i<responseText.length(); i++) {
+    	    	      uidStart = responseText.indexOf("uid", i) + 5;
+    	    	      uidEnd = responseText.indexOf("}", uidStart);
+    	    	      String id = responseText.substring(uidStart, uidEnd);
+    	    	      if (!androidIds.contains(id)) {
+    	    	         androidIds.add(id);
+    	    	      }
+    	     }
+    	     return androidIds;
+    }*/
+    
+    // Asking for friends' music activity requires new
+    // permissions. Ask for them in context!
+   /* private void handleGetMusic(ArrayList<String> androidIds) {
+    	   if (Session.getActiveSession().getPermissions()
+  			  .contains("friends_actions.music")) {
+    		   requestFriendDataFromIds(androidIds);
+    	   } else {
+    		   Session.NewPermissionsRequest newPermsRequest = 
+    				   new Session.NewPermissionsRequest(
+    					   getActivity(),
+    					   Arrays.asList("friends_actions.music"));
+    		   Session.getActiveSession()
+    		          .requestNewReadPermissions(newPermsRequest);
+    		   if (Session.getActiveSession().getState() == 
+    				   SessionState.OPENED_TOKEN_UPDATED) {
+    			   requestFriendDataFromIds(androidIds);
+    		   }
+    	   }
+    }*/
+    
+    // Get the latest song each friend using an Android
+    // device listened to
+    /*private void requestFriendDataFromIds(ArrayList<String> androidIds) {
+    	   if (Session.getActiveSession().getPermissions()
+  			  .contains("friends_actions.music")) {
+    		   
+    	     RequestBatch requestBatch = new RequestBatch();
+ 
+         for (String id : androidIds) {
+            Request musicRequest = Request.newGraphPathRequest(
+            		Session.getActiveSession(), 
+                id+"/music.listens", 
+                new Request.Callback() {
+                    
+            	        public void onCompleted(Response response) {
+            	        	  if (response != null) {
+            	        	    Log.i("Story Detail Music", response.toString());
+            	        	  }
+            	        }
+                });
+            requestBatch.add(musicRequest);
+         }
+   
+         requestBatch.executeAsync();	
+    	  }
+    }*/
+    	
 }
 
 

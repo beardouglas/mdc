@@ -27,6 +27,17 @@
     />
 </TableRow>
 <TableRow>
+    <Button
+    android:id="@+id/androidFriendsButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textStyle="bold"
+    android:gravity="center"
+    android:layout_marginTop="30dp"
+    android:text="@string/androidFriends"
+    />
+</TableRow>
+<TableRow>
     <TextView
         android:id="@+id/story_detail"
         android:textAppearance="?android:attr/textAppearanceLarge"

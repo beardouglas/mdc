@@ -62,8 +62,7 @@ public class FriendPicker extends FragmentActivity {
 	                finishActivity();
 	            }
 	        });
-	        fragmentToShow = friendPickerFragment;
-
+	        fragmentToShow = friendPickerFragment;     
 	    } else {
 	        // Nothing to do, finish
 	        setResult(RESULT_CANCELED);
