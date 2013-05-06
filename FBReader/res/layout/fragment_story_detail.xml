@@ -5,56 +5,67 @@
     android:orientation="vertical">
     
     <TableRow>
-    <Button
-    android:id="@+id/shareButton"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textStyle="bold"
-    android:gravity="center"
-    android:layout_marginTop="30dp"
-    android:text="@string/share"
-    />
+      <Button
+      android:id="@+id/shareButton"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textStyle="bold"
+      android:gravity="center"
+      android:layout_marginTop="30dp"
+      android:text="@string/share"
+      />
     </TableRow>
     <TableRow>
-    <Button
-    android:id="@+id/friendsButton"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textStyle="bold"
-    android:gravity="center"
-    android:layout_marginTop="30dp"
-    android:text="@string/friends"
-    />
-</TableRow>
-<TableRow>
-    <Button
-    android:id="@+id/androidFriendsButton"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textStyle="bold"
-    android:gravity="center"
-    android:layout_marginTop="30dp"
-    android:text="@string/androidFriends"
-    />
-</TableRow>
-<TableRow>
+      <Button
+        android:id="@+id/sendRequestsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="@string/sendRequests"
+       />
+    </TableRow>
+    <TableRow>
+      <Button
+        android:id="@+id/friendsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="@string/friends"
+      />
+    </TableRow>
+    <TableRow>
+      <Button
+        android:id="@+id/androidFriendsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="@string/androidFriends"
+      />
+  </TableRow>
+  <TableRow>
     <TextView
         android:id="@+id/story_detail"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp" />
-    </TableRow>
-    <TableRow>
+  </TableRow>
+  <TableRow>
     
     <TextView
-    android:id="@+id/story_description"
-    android:textAppearance="?android:attr/textAppearanceSmall"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
+      android:id="@+id/story_description"
+      android:textAppearance="?android:attr/textAppearanceSmall"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:padding="16dp"
     />
-    </TableRow>
+  </TableRow>
 
-   </TableLayout>
+</TableLayout>
 

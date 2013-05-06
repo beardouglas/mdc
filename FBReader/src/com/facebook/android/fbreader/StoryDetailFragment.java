@@ -49,6 +49,7 @@ public class StoryDetailFragment extends Fragment {
     private Button shareButton;
     private Button pickFriendsButton;
     private Button androidFriendsButton;
+    private Button sendRequestsButton;
     
     /*private UiLifecycleHelper uiHelper;
     private Session.StatusCallback callback = new Session.StatusCallback() {
@@ -63,7 +64,7 @@ public class StoryDetailFragment extends Fragment {
     	    Log.i("StoryDetailFragment", "Session updated: "+ state.toString());
 	} */
     
-  //private static final int REAUTH_ACTIVITY_CODE = 100;
+   // private static final int REAUTH_ACTIVITY_CODE = 100;
 
 
     public StoryDetailFragment() {
@@ -86,7 +87,7 @@ public class StoryDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_story_detail, container, false);
         if (mItem != null) {
         	   shareButton = ((Button) rootView.findViewById(R.id.shareButton));
-        	  /* shareButton.setOnClickListener(new View.OnClickListener() {
+        	   /*shareButton.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
@@ -98,6 +99,23 @@ public class StoryDetailFragment extends Fragment {
 								Toast.LENGTH_SHORT)
 								.show();
 					}
+				}
+			});*/
+        	  
+        	   sendRequestsButton = ((Button) rootView.findViewById(R.id.sendRequestsButton));
+       	   /*sendRequestsButton.setOnClickListener( new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if (Session.getActiveSession().isOpened()) {
+						sendRequest(mItem);
+					} else {
+						Toast.makeText(getActivity(), 
+								"You must log in to publish a story", 
+								Toast.LENGTH_SHORT)
+								.show();
+					}
+					
 				}
 			});*/
         	   
@@ -132,6 +150,7 @@ public class StoryDetailFragment extends Fragment {
 					}
 				}
 			});*/
+        
         	   
            ((TextView) rootView.findViewById(R.id.story_detail)).setText(mItem.title);
            ((TextView) rootView.findViewById(R.id.story_description)).setText(mItem.content);
@@ -196,19 +215,72 @@ public class StoryDetailFragment extends Fragment {
         feedDialog.show();
     }*/
     
+    // Very similar to the Feed Dialog, this uses the WebDialogBuilder
+    // to build a Requests dialog. 
+    /*private void sendRequest(DummyContent.DummyItem item) {
+    	    Bundle params = new Bundle();
+        params.putString("message", "Learn how to make your Android apps social");
+        
+        // Only show people who aren't already using the app 
+        params.putString("filters", "app_non_users");
+        
+        // Track which page this request was generated from
+        params.putString("data", item.content);
+
+        WebDialog requestsDialog = (
+            new WebDialog.RequestsDialogBuilder(getActivity(),
+                Session.getActiveSession(),
+                params))
+                .setOnCompleteListener(new OnCompleteListener() {
+
+                   // Add logging here to see when people choose
+                	   // not to share 
+                	   @Override
+                    public void onComplete(Bundle values,
+                        FacebookException error) {
+                        if (error != null) {
+                            if (error instanceof FacebookOperationCanceledException) {
+                                Toast.makeText(getActivity().getApplicationContext(), 
+                                    "Request cancelled", 
+                                    Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity().getApplicationContext(), 
+                                    "Network Error", 
+                                    Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            final String requestId = values.getString("request");
+                            if (requestId != null) {
+                                Toast.makeText(getActivity().getApplicationContext(), 
+                                    "Request sent",  
+                                    Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity().getApplicationContext(), 
+                                    "Request cancelled", 
+                                    Toast.LENGTH_SHORT).show();
+                            }
+                        }   
+                    }
+
+                })
+                .build();
+        requestsDialog.show();
+    	
+    }*/
+    
     
     // Sends an intent to the FriendPicker Activity to
     // pop up a FriendPickerFragment and save the list
     // of selected people in the Application data.
-    private void pickFriends(Uri data, int requestCode) {
+    /*private void pickFriends(Uri data, int requestCode) {
     	     Intent intent = new Intent();
     	     intent.setData(data);
     	     intent.setClass(getActivity(), FriendPicker.class);
     	     startActivityForResult(intent, requestCode);
-    }
+    }*/
     
     // Handle the result of the friend picker
-    /*@Override
+   /* @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
        if (resultCode == Activity.RESULT_OK && 
@@ -221,14 +293,14 @@ public class StoryDetailFragment extends Fragment {
         } else if (requestCode == REAUTH_ACTIVITY_CODE) {
           uiHelper.onActivityResult(requestCode, resultCode, data);
         }
-    } */
+    }*/
     
    
     // Gets Android friend data in two steps-- make FQL
     // call to get IDs, pass those ids to a function that
     // will create Requests to fetch the songs that 
     // friend has listened to
-    /*private void getAndroidFriends() {
+   /* private void getAndroidFriends() {
     	     requestAndroidFriendIds();
     }*/
     
@@ -289,7 +361,7 @@ public class StoryDetailFragment extends Fragment {
     
     // Asking for friends' music activity requires new
     // permissions. Ask for them in context!
-   /* private void handleGetMusic(ArrayList<String> androidIds) {
+   /*private void handleGetMusic(ArrayList<String> androidIds) {
     	   if (Session.getActiveSession().getPermissions()
   			  .contains("friends_actions.music")) {
     		   requestFriendDataFromIds(androidIds);
@@ -333,7 +405,6 @@ public class StoryDetailFragment extends Fragment {
          requestBatch.executeAsync();	
     	  }
     }*/
-    	
 }
 
 

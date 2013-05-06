@@ -31,7 +31,7 @@ public class StoryListActivity extends FragmentActivity
 	
     // add the UiLifecycleHelper to manage Session
 	
-   /* private UiLifecycleHelper uiHelper;
+   /*private UiLifecycleHelper uiHelper;
     private Session.StatusCallback callback = new Session.StatusCallback() {
         @Override
         public void call(Session session, SessionState state, Exception exception) {
@@ -48,8 +48,8 @@ public class StoryListActivity extends FragmentActivity
         getActionBar().setDisplayHomeAsUpEnabled(true);
         
         
-       // uiHelper = new UiLifecycleHelper(this, callback);
-       // uiHelper.onCreate(savedInstanceState);
+      // uiHelper = new UiLifecycleHelper(this, callback);
+      // uiHelper.onCreate(savedInstanceState);
         
         
         if (findViewById(R.id.story_detail_container) != null) {
@@ -98,7 +98,7 @@ public class StoryListActivity extends FragmentActivity
     // Explicitly call UiLifecycleHelper methods in Activity
     // lifecycle methods:
     
-   /* @Override
+   /*@Override
     public void onResume() {
         super.onResume();
         uiHelper.onResume();

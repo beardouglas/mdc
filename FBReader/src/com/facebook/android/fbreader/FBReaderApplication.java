@@ -18,7 +18,6 @@ import com.facebook.model.GraphUser;
 public class FBReaderApplication extends Application {
 	
 	private List<GraphUser> selectedFriends;
-	private List<String> androidFriendIds;
 	
 	public List<GraphUser> getSelectedFriends() {
 	    return selectedFriends;

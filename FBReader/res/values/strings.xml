@@ -2,10 +2,11 @@
 
     <string name="app_name">FBReader</string>
     <string name="title_story_detail">Resource Detail</string>
-    <string name="title_story_list">Facebook Developer Resources</string>
+    <string name="title_story_list">Facebook Resources</string>
     <string name="share">Share</string>
-    <string name="friends">Who should know?</string>
+    <string name="friends">Pick friends</string>
     <string name="androidFriends">Latest listens on Android</string>
+    <string name="sendRequests">Invite a friend</string>
     <string name="error_dialog_title">Error</string>
     <string name="error_dialog_button_text">OK</string>
     <string name="app_id">563822636996345</string>
